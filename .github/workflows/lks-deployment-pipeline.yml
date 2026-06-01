@@ -1,0 +1,52 @@
+name: LKS Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'leantime/**'
+      - 'gatus/**'
+      - '.github/workflows/lks-deployment-pipeline.yml'
+
+jobs:
+
+  deploy-leantime:
+    name: Deploy Leantime
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy message
+        run: echo "Deploying Leantime..."
+
+  build-gatus:
+    name: Build Gatus
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build message
+        run: echo "Building Gatus..."
+
+  deploy-gatus:
+    name: Deploy Gatus
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Deploy message
+        run: echo "Deploying Gatus..."
